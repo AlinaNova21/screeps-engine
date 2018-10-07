@@ -36,6 +36,7 @@ func ProcessRoom(room string) {
 		Movement:    &movement,
 		ObjectsBulk: objectsBulk,
 		GameTime:    gameTime,
+		RoomObjects: keyedObjects,
 	}
 
 	for userId, userIntents := range roomIntents {
