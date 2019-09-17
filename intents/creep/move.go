@@ -2,7 +2,9 @@ package creep
 
 import (
 	"fmt"
+
 	"github.com/ags131/screeps-engine/driver"
+	"github.com/ags131/screeps-engine/game"
 	"github.com/ags131/screeps-engine/intents/handler"
 	"github.com/ags131/screeps-engine/utils"
 )
@@ -11,7 +13,7 @@ func init() {
 	handler.RegisterIntent("creep", "move", Move)
 }
 
-func Move(object driver.Object, intent handler.IntentData, scope handler.IntentScope) {
+func Move(object *game.GameObject, intent handler.IntentData, scope handler.IntentScope) {
 	if object.Props["spawning"] == true {
 		return
 	}

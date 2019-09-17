@@ -21,8 +21,8 @@ type Object struct {
 	ID    bson.ObjectId          "_id,omitempty"
 	Type  string                 "type"
 	Room  string                 "room"
-	X     int                    "x"
-	Y     int                    "y"
+	X     int8                   "x"
+	Y     int8                   "y"
 	Props map[string]interface{} ",inline"
 }
 

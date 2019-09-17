@@ -2,17 +2,17 @@ package creep
 
 import (
 	"fmt"
-	"github.com/ags131/screeps-engine/driver"
-	"github.com/ags131/screeps-engine/intents/handler"
-	"github.com/ags131/screeps-engine/utils"
 	"math"
+
+	"github.com/ags131/screeps-engine/game"
+	"github.com/ags131/screeps-engine/intents/handler"
 )
 
 func init() {
 	handler.RegisterIntent("creep", "upgradeController", UpgradeController)
 }
 
-func UpgradeController(object driver.Object, intent handler.IntentData, scope handler.IntentScope) {
+func UpgradeController(object *game.GameObject, intent handler.IntentData, scope handler.IntentScope) {
 	if object.Props["spawning"] == true {
 		return
 	}

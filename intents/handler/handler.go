@@ -1,33 +1,35 @@
 package handler
 
-import "github.com/ags131/screeps-engine/driver"
+import (
+	"github.com/ags131/screeps-engine/driver"
+	"github.com/ags131/screeps-engine/game"
+)
 
 type IntentData = map[string]interface{}
-type IntentFunc = func(driver.Object, IntentData, IntentScope)
+type IntentFunc = func(*game.GameObject, IntentData, IntentScope)
 
-var objectTypes map[string]map[string]IntentFunc
+var objectTypes map[game.GameObjectType]map[string]IntentFunc
 
 type IntentScope struct {
-	User        driver.User
-	Terrain     driver.Terrain
-	RoomObjects map[string]driver.Object
+	World       *game.World
+	User        *game.User
+	Room        *game.Room
 	Movement    *Movement
 	ObjectsBulk *driver.Bulk
-	GameTime    int
 }
 
 func init() {
-	objectTypes = make(map[string]map[string]IntentFunc)
+	objectTypes = make(map[game.GameObjectType]map[string]IntentFunc, 0)
 }
 
-func RegisterIntent(object string, intent string, fn IntentFunc) {
-	if objectTypes[object] == nil {
-		objectTypes[object] = make(map[string]IntentFunc)
+func RegisterIntent(objectType game.GameObjectType, intent string, fn IntentFunc) {
+	if objectTypes[objectType] == nil {
+		objectTypes[objectType] = make(map[string]IntentFunc, 0)
 	}
-	objectTypes[object][intent] = fn
+	objectTypes[objectType][intent] = fn
 }
 
-func ProcessIntent(object driver.Object, intentType string, intent IntentData, scope IntentScope) {
+func ProcessIntent(object *game.GameObject, intentType string, intent IntentData, scope IntentScope) {
 	if objectTypes[object.Type] != nil && objectTypes[object.Type][intentType] != nil {
 		fn := objectTypes[object.Type][intentType]
 		fn(object, intent, scope)

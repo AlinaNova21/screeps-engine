@@ -1,7 +1,7 @@
 package creep
 
 import (
-	"github.com/ags131/screeps-engine/driver"
+	"github.com/ags131/screeps-engine/game"
 	"github.com/ags131/screeps-engine/intents/handler"
 	"github.com/globalsign/mgo/bson"
 )
@@ -10,7 +10,7 @@ func init() {
 	handler.RegisterIntent("creep", "tick", Tick)
 }
 
-func Tick(object driver.Object, intent handler.IntentData, scope handler.IntentScope) {
+func Tick(object *game.GameObject, intent handler.IntentData, scope handler.IntentScope) {
 	update := make(map[string]interface{})
 	doUpdate := false
 	if object.Props["spawning"] == true {
